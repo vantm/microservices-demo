@@ -33,7 +33,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/emailservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/emailservice:v0.2.3
         ports:
         - containerPort: 8080
         env:
@@ -88,7 +88,7 @@ spec:
       serviceAccountName: default
       containers:
         - name: server
-          image: gcr.io/google-samples/microservices-demo/checkoutservice:v0.2.1
+          image: gcr.io/google-samples/microservices-demo/checkoutservice:v0.2.3
           ports:
           - containerPort: 5050
           readinessProbe:
@@ -154,10 +154,11 @@ spec:
       labels:
         app: recommendationservice
     spec:
+      serviceAccountName: default
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/recommendationservice:v0.2.3
         ports:
         - containerPort: 8080
         readinessProbe:
@@ -218,7 +219,7 @@ spec:
       serviceAccountName: default
       containers:
         - name: server
-          image: gcr.io/google-samples/microservices-demo/frontend:v0.2.1
+          image: gcr.io/google-samples/microservices-demo/frontend:v0.2.3
           ports:
           - containerPort: 8080
           readinessProbe:
@@ -254,8 +255,10 @@ spec:
             value: "checkoutservice:5050"
           - name: AD_SERVICE_ADDR
             value: "adservice:9555"
-          - name: ENV_PLATFORM
-            value: "gcp"
+          # # ENV_PLATFORM: One of: local, gcp, aws, azure, onprem
+          # # When not set, defaults to "local" unless running in GKE, otherwies auto-sets to gcp 
+          # - name: ENV_PLATFORM 
+          #   value: "aws"
           # - name: DISABLE_TRACING
           #   value: "1"
           # - name: DISABLE_PROFILER
@@ -313,7 +316,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/paymentservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/paymentservice:v0.2.3
         ports:
         - containerPort: 50051
         env:
@@ -363,7 +366,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.2.3
         ports:
         - containerPort: 3550
         env:
@@ -421,14 +424,12 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/cartservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/cartservice:v0.2.3
         ports:
         - containerPort: 7070
         env:
         - name: REDIS_ADDR
           value: "redis-cart:6379"
-        - name: ASPNETCORE_URLS
-          value: "http://0.0.0.0:7070"
         resources:
           requests:
             cpu: 200m
@@ -480,7 +481,7 @@ spec:
       restartPolicy: Always
       containers:
       - name: main
-        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/loadgenerator:v0.2.3
         env:
         - name: FRONTEND_ADDR
           value: "frontend:80"
@@ -511,7 +512,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/currencyservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/currencyservice:v0.2.3
         ports:
         - name: grpc
           containerPort: 7000
@@ -564,9 +565,10 @@ spec:
       labels:
         app: shippingservice
     spec:
+      serviceAccountName: default
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/shippingservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/shippingservice:v0.2.3
         ports:
         - containerPort: 50051
         env:
@@ -678,7 +680,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: server
-        image: gcr.io/google-samples/microservices-demo/adservice:v0.2.1
+        image: gcr.io/google-samples/microservices-demo/adservice:v0.2.3
         ports:
         - containerPort: 9555
         env:
@@ -688,8 +690,8 @@ spec:
         #   value: "1"
         # - name: DISABLE_TRACING
         #   value: "1"
-        #- name: JAEGER_SERVICE_ADDR
-        #  value: "jaeger-collector:14268"
+        # - name: JAEGER_SERVICE_ADDR
+        #   value: "jaeger-collector:14268"
         resources:
           requests:
             cpu: 200m

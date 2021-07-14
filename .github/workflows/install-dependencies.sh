@@ -15,6 +15,9 @@
 
 set -euo pipefail
 
+# install wget
+sudo apt install -y wget
+
 # install dotnet CLI
 sudo apt-get update
 sudo apt-get install wget
@@ -27,7 +30,7 @@ sudo chown root:root /etc/apt/sources.list.d/microsoft-prod.list
 
 sudo apt-get install -y apt-transport-https && \
 sudo apt-get update && \
-sudo apt-get install -y dotnet-sdk-3.1
+sudo apt-get install -y dotnet-sdk-5.0
 echo "✅ dotnet installed"
 
 # install kubectl
@@ -41,6 +44,9 @@ echo 'export GOPATH=$HOME/go' >> ~/.profile
 echo 'export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin' >> ~/.profile
 source ~/.profile
 echo "✅ golang installed"
+
+# install build-essential (gcc, used for go test)
+sudo apt install -y build-essential
 
 # install addlicense
 go get -u github.com/google/addlicense
